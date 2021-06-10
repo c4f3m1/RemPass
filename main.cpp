@@ -7,8 +7,8 @@
 using namespace std;
 
 string question(const string &, const string &);
-void exclusiva(const string &, string);
-void inclusiva(const string &, string);
+void exclusive(const string &, string);
+void inclusive(const string &, string);
 
 
 int main(int argc, char const *argv[]) {
@@ -16,14 +16,14 @@ int main(int argc, char const *argv[]) {
     system("clear");
     setlocale(LC_CTYPE,"Spanish");
 
-    string old_pass, caracteres, tipo;
+    string old_pass, characters, type;
 
     old_pass = question("Introduce la contraseña utilizando _ en los huecos que desconozcas, ejemplo: Con_ra_e_a", "Contraseña: ");
-    caracteres = question("Introduce los caracteres que pueden tomar los huecos", "Caracteres: ");
-    tipo = question("¿Es exclusiva?", "Si / No: ");
+    characters = question("Introduce los caracteres que pueden tomar los huecos", "Caracteres: ");
+    type = question("¿Es exclusiva?", "Si / No: ");
 
-    if (tipo == "Si") exclusiva(old_pass, caracteres);
-    if (tipo == "No") inclusiva(old_pass, caracteres);
+    if (type == "Si") exclusive(old_pass, characters);
+    if (type == "No") inclusive(old_pass, characters);
 
     return 0;
 }
@@ -43,36 +43,45 @@ string question(const string &question, const string &subquestion) {
 }
 
 /*
-[ABC] x 3 -> ABC ACB BAC BCA CAB CBA
-PERMUTATION n! = n * (n-1)*(n-2)*...*3*2*1
+PERMUTATION WITH REPETITIONS
+n! = n * (n-1)*(n-2)*...*3*2*1
 */
-void exclusiva(const string &old_pass, string caracteres){
+void exclusive(const string &old_pass, string characters){
 
     string match;
     int num = 0;
-    sort(caracteres.begin(), caracteres.end());
+    sort(characters.begin(), characters.end());
 
     do {
         match = old_pass;
-        for (int i = 0; i < (int) caracteres.length(); i++){
+        for (int i = 0; i < (int) characters.length(); i++){
             for (int j = 0; j < (int) match.length(); j++){
                 if (match[j] == '_') {
-                    match[j] = caracteres[i];
+                    match[j] = characters[i];
                     break;
                 }
             }
         }
         cout << "Posibilidad nº " << ++num << " --> " << match << '\n';
-    } while (next_permutation(caracteres.begin(), caracteres.end()));
+    } while (next_permutation(characters.begin(), characters.end()));
 
 }
 
 /*
-[ABC] x 3 -> AAA AAB AAC ABA ABB ABC ACA ACB ACC BAA BAB BAC BBA BBB BBC BCA BCB BCC CAA CAB CAC CBA CBB CBC CCA CCB CCC
-3 x 3 = 27
+PERMUTATION WITH REPETITIONS
+n^k
 */
-void inclusiva(const string &old_pass, string caracteres){
+void inclusive(const string &old_pass, string characters){
 
-    cout << "Futuras implementaciones" << endl;
+    string test = "123";
+    int huecos = 3;
 
+    for(int h = 0; h < ((int) test.length()^huecos); h++){
+        for (int i = 0; i < (int) test.length(); i++){
+            for (int j = 0; j < huecos; j++){
+                cout << test[j];
+            }
+            cout << endl;
+        }
+    }
 }
